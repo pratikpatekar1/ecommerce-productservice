@@ -35,5 +35,5 @@ public class ProductController {
     public GenericProductDto updateProductById(@PathVariable("id") Long id, @RequestBody GenericProductDto product){
         return productService.updateProductById(id, product);
     }
-
+    //TODO: PATCH
 }

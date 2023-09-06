@@ -2,15 +2,20 @@ package dev.zoro.productservice.services;
 
 import dev.zoro.productservice.dtos.FakeStoreProductDto;
 import dev.zoro.productservice.dtos.GenericProductDto;
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 @Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
@@ -65,4 +70,5 @@ public class FakeStoreProductService implements ProductService{
         ResponseEntity<GenericProductDto> response = restTemplate.exchange(updateProductRequestUrl, HttpMethod.PUT, requestEntity, GenericProductDto.class , id);
         return response.getBody();
     }
+    //TODO: PATCH
 }
