@@ -1,4 +1,4 @@
-package dev.zoro.productservice.dtos;
+package dev.zoro.productservice.thirdpartyclients.productservice.fakestore;
 
 import lombok.Getter;
 import lombok.Setter;
