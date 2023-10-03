@@ -61,8 +61,4 @@ public class FakeStoreProductService implements ProductService{
     public GenericProductDto updateProductById(String id, GenericProductDto product) throws NotFoundException {
         return convertFakeStoreProductToGenericProduct(fakeStoreProductServiceClient.updateProductById(id,product));
     }
-
-    public List<CategoryResponseDto> getAllCategories() throws NotFoundException {
-        return null;
-    }
 }
