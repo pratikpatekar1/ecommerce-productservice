@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class FakeStoreProductServiceClient {
@@ -24,7 +25,7 @@ public class FakeStoreProductServiceClient {
         this.productRequestBaseUrl = fakeStoreUrl+fakeStoreProductEndpoint;
         this.specificProductRequestUrl = fakeStoreUrl+fakeStoreProductEndpoint+"/{id}";
     }
-    public FakeStoreProductDto getProductById(Long id) throws NotFoundException {
+    public FakeStoreProductDto getProductById(String id) throws NotFoundException {
         ResponseEntity<FakeStoreProductDto> response = restTemplate.getForEntity(specificProductRequestUrl, FakeStoreProductDto.class, id);
         FakeStoreProductDto fakeStoreProductDto = response.getBody();
         if(fakeStoreProductDto==null)throw new NotFoundException("Product with id: "+id+" does not exist.");
@@ -45,12 +46,12 @@ public class FakeStoreProductServiceClient {
         return result;
     }
 
-    public FakeStoreProductDto deleteProductById(Long id){
+    public FakeStoreProductDto deleteProductById(String id){
         ResponseEntity<FakeStoreProductDto> response = restTemplate.exchange(specificProductRequestUrl, HttpMethod.DELETE, null, FakeStoreProductDto.class, id);
         FakeStoreProductDto fakeStoreProductDto = response.getBody();;
         return fakeStoreProductDto;
     }
-    public FakeStoreProductDto updateProductById(Long id, GenericProductDto product){
+    public FakeStoreProductDto updateProductById(String id, GenericProductDto product) throws NotFoundException {
         HttpEntity<GenericProductDto> requestEntity = new HttpEntity<>(product); // Can also add Headers as 2nd argument if required
         ResponseEntity<FakeStoreProductDto> response = restTemplate.exchange(specificProductRequestUrl, HttpMethod.PUT, requestEntity, FakeStoreProductDto.class , id);
         FakeStoreProductDto fakeStoreProductDto = response.getBody();

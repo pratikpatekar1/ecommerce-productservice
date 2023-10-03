@@ -1,16 +1,21 @@
 package dev.zoro.productservice.services;
 
+import dev.zoro.productservice.dtos.CategoryDto;
+import dev.zoro.productservice.dtos.CategoryResponseDto;
 import dev.zoro.productservice.dtos.GenericProductDto;
+import dev.zoro.productservice.dtos.ProductDto;
 import dev.zoro.productservice.exceptions.NotFoundException;
 import dev.zoro.productservice.models.Category;
 import dev.zoro.productservice.models.Price;
 import dev.zoro.productservice.models.Product;
+import dev.zoro.productservice.repositories.CategoryRepository;
 import dev.zoro.productservice.repositories.ProductRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Primary
@@ -34,26 +39,33 @@ public class SelfProductServiceImpl implements ProductService {
     }
 
     @Override
-    public GenericProductDto getProductById(UUID id) throws NotFoundException {
-        return convertToGenericProductDto(productRepository.findProductById(id));
+    public GenericProductDto getProductById(String id) throws NotFoundException {
+        Optional<Product> productOptional = productRepository.findProductById(UUID.fromString(id));
+        if (productOptional.isEmpty()) throw new NotFoundException("Product with id: " + id + " does not exist.");
+        return convertToGenericProductDto(productOptional.get());
     }
 
     @Override
     public GenericProductDto createProduct(GenericProductDto product) {
         Product product1 = new Product();
+
         product1.setId(product.getId());
         product1.setTitle(product.getTitle());
         product1.setDescription(product.getDescription());
+
         Category category = new Category();
         category.setName(product.getCategory());
+
         product1.setCategory(category);
         product1.setImage(product.getImage());
+
         Price price = new Price();
         price.setPrice(product.getPrice());
         price.setCurrency("INR");
+
         product1.setPrice(price);
-//        product1.setPrice(product.getPrice());
         Product savedProduct = productRepository.save(product1);
+
         return convertToGenericProductDto(savedProduct);
     }
 
@@ -68,16 +80,18 @@ public class SelfProductServiceImpl implements ProductService {
     }
 
     @Override
-    public GenericProductDto deleteProductById(UUID id) throws NotFoundException {
-        Product product = productRepository.findProductById(id);
-        if( product == null) throw new NotFoundException("Product with id: "+id+" does not exist.");
-        productRepository.deleteById(id);
-        return convertToGenericProductDto(product);
+    public GenericProductDto deleteProductById(String id) throws NotFoundException {
+        Optional<Product> productOptional = productRepository.findProductById(UUID.fromString(id));
+        if(productOptional.isEmpty()) throw new NotFoundException("Product with id: "+id+" does not exist.");
+        productRepository.deleteById(UUID.fromString(id));
+        return convertToGenericProductDto(productOptional.get());
     }
 
     @Override
-    public GenericProductDto updateProductById(UUID id, GenericProductDto product) {
-        Product product1 = productRepository.findProductById(id);
+    public GenericProductDto updateProductById(String id, GenericProductDto product) throws NotFoundException {
+        Optional<Product> productOptional = productRepository.findProductById(UUID.fromString(id));
+        if(productOptional.isEmpty())throw new NotFoundException("Product with id: "+id+" does not exist.");
+        Product product1 = productOptional.get();
         product1.setTitle(product.getTitle());
         product1.setDescription(product.getDescription());
         product1.setImage(product.getImage());
@@ -90,4 +104,5 @@ public class SelfProductServiceImpl implements ProductService {
         Product savedProduct = productRepository.save(product1);
         return convertToGenericProductDto(savedProduct);
     }
+
 }

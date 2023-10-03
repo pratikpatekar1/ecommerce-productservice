@@ -1,5 +1,7 @@
 package dev.zoro.productservice.controllers;
 
+import dev.zoro.productservice.dtos.CategoryDto;
+import dev.zoro.productservice.dtos.CategoryResponseDto;
 import dev.zoro.productservice.dtos.GenericProductDto;
 import dev.zoro.productservice.exceptions.NotFoundException;
 import dev.zoro.productservice.services.ProductService;
@@ -24,11 +26,11 @@ public class ProductController {
         return new ResponseEntity<>(productService.getAllProducts(),HttpStatus.OK);
     }
     @GetMapping("{id}")
-    public ResponseEntity<GenericProductDto> getProductById(@PathVariable("id") UUID id) throws NotFoundException {
+    public ResponseEntity<GenericProductDto> getProductById(@PathVariable("id") String id) throws NotFoundException {
         return new ResponseEntity<>(productService.getProductById(id),HttpStatus.OK);
     }
     @DeleteMapping("{id}")
-    public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") UUID id) throws NotFoundException {
+    public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") String id) throws NotFoundException {
         return new ResponseEntity<>(productService.deleteProductById(id), HttpStatus.OK);
     }
     @PostMapping
@@ -36,8 +38,7 @@ public class ProductController {
         return new ResponseEntity<>(productService.createProduct(product),HttpStatus.OK);
     }
     @PutMapping("{id}")
-    public ResponseEntity<GenericProductDto> updateProductById(@PathVariable("id") UUID id, @RequestBody GenericProductDto product){
+    public ResponseEntity<GenericProductDto> updateProductById(@PathVariable("id") String id, @RequestBody GenericProductDto product) throws NotFoundException{
         return new ResponseEntity<>(productService.updateProductById(id, product),HttpStatus.OK);
     }
-    //TODO: PATCH
 }
