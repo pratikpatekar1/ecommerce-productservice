@@ -7,6 +7,7 @@ import dev.zoro.productservice.exceptions.NotFoundException;
 import dev.zoro.productservice.models.Category;
 import dev.zoro.productservice.models.Product;
 import dev.zoro.productservice.repositories.CategoryRepository;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Primary
 @Service("categoryServiceImpl")
 public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;

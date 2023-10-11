@@ -23,12 +23,14 @@ import java.util.List;
 public class CategoryController {
     private CategoryService categoryService;
 
-    public CategoryController(@Qualifier("categoryServiceImpl") CategoryService categoryService){
+    public CategoryController(CategoryService categoryService){
         this.categoryService = categoryService;
     }
     @GetMapping("/id/{uuid}")
     public ResponseEntity<List<ProductDto>> getProductsForCategory(@PathVariable("uuid") String uuid) {
         Category category = categoryService.getProductsForCategory(uuid);
+
+        if(category==null)return new ResponseEntity<>(new ArrayList<>(),HttpStatus.NOT_FOUND);
 
         List<Product> products = category.getProducts();
 
