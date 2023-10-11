@@ -23,7 +23,8 @@ public class ProductController {
     }
     @GetMapping
     public ResponseEntity<List<GenericProductDto>> getAllProducts(){
-        return new ResponseEntity<>(productService.getAllProducts(),HttpStatus.OK);
+        List<GenericProductDto>productDtos = productService.getAllProducts();
+        return new ResponseEntity<>(productDtos,HttpStatus.OK);
     }
     @GetMapping("{id}")
     public ResponseEntity<GenericProductDto> getProductById(@PathVariable("id") String id) throws NotFoundException {
@@ -35,7 +36,8 @@ public class ProductController {
     }
     @PostMapping
     public ResponseEntity<GenericProductDto> createProduct(@RequestBody GenericProductDto product){
-        return new ResponseEntity<>(productService.createProduct(product),HttpStatus.OK);
+        GenericProductDto productDto = productService.createProduct(product);
+        return new ResponseEntity<>(productDto,HttpStatus.OK);
     }
     @PutMapping("{id}")
     public ResponseEntity<GenericProductDto> updateProductById(@PathVariable("id") String id, @RequestBody GenericProductDto product) throws NotFoundException{

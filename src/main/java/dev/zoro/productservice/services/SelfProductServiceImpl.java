@@ -22,6 +22,7 @@ import java.util.UUID;
 @Service("selfProductService")
 public class SelfProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
+    private CategoryRepository categoryRepository;
 
     private GenericProductDto convertToGenericProductDto(Product product) {
         GenericProductDto genericProductDto = new GenericProductDto();
@@ -34,8 +35,9 @@ public class SelfProductServiceImpl implements ProductService {
         return genericProductDto;
     }
 
-    public SelfProductServiceImpl(ProductRepository productRepository) {
+    public SelfProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -53,8 +55,11 @@ public class SelfProductServiceImpl implements ProductService {
         product1.setTitle(product.getTitle());
         product1.setDescription(product.getDescription());
 
-        Category category = new Category();
-        category.setName(product.getCategory());
+        Category category = categoryRepository.getCateogryByName(product.getCategory());
+        if(category==null){
+            category = new Category();
+            category.setName(product.getCategory());
+        }
 
         product1.setCategory(category);
         product1.setImage(product.getImage());
@@ -95,8 +100,11 @@ public class SelfProductServiceImpl implements ProductService {
         product1.setTitle(product.getTitle());
         product1.setDescription(product.getDescription());
         product1.setImage(product.getImage());
-        Category category = product1.getCategory();
-        category.setName(product.getCategory());
+        Category category = categoryRepository.getCateogryByName(product.getCategory());
+        if(category==null){
+            category = new Category();
+            category.setName(product.getCategory());
+        }
         Price price = product1.getPrice();
         price.setPrice(product.getPrice());
         product1.setCategory(category);
