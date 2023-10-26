@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -81,7 +82,9 @@ public class ProductControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(product))
                 )
-                .andExpect(content().string(objectMapper.writeValueAsString(expectedProduct)));
+                .andExpect(status().is(200))
+                .andExpect(content().string(objectMapper.writeValueAsString(expectedProduct)))
+                .andExpect(jsonPath("$.title", is("New Product")));
     }
 
 }

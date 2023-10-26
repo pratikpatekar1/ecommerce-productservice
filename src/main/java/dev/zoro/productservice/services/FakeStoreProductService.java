@@ -4,6 +4,7 @@ import dev.zoro.productservice.dtos.CategoryDto;
 import dev.zoro.productservice.dtos.CategoryResponseDto;
 import dev.zoro.productservice.dtos.GenericProductDto;
 import dev.zoro.productservice.exceptions.NotFoundException;
+import dev.zoro.productservice.security.JwtObject;
 import dev.zoro.productservice.thirdpartyclients.productservice.fakestore.FakeStoreProductDto;
 import dev.zoro.productservice.thirdpartyclients.productservice.fakestore.FakeStoreProductServiceClient;
 import org.springframework.context.annotation.Primary;
@@ -32,8 +33,8 @@ public class FakeStoreProductService implements ProductService{
         this.fakeStoreProductServiceClient = fakeStoreProductServiceClient;
     }
 
-    @Override
-    public GenericProductDto getProductById(String id) throws NotFoundException {
+
+    public GenericProductDto getProductById(String id, UUID userID) throws NotFoundException {
         return convertFakeStoreProductToGenericProduct(fakeStoreProductServiceClient.getProductById(id));
     }
 

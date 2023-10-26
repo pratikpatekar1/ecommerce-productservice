@@ -15,4 +15,11 @@ public class ControllerAdvices {
                 HttpStatus.NOT_FOUND
         );
     }
+    @ExceptionHandler(UnauthorizedException.class)
+    private ResponseEntity<ExceptionDto> handleUnauthorizedException(UnauthorizedException unauthorizedException){
+        return new ResponseEntity(
+                new ExceptionDto(HttpStatus.UNAUTHORIZED,unauthorizedException.getMessage()),
+                HttpStatus.UNAUTHORIZED
+        );
+    }
 }

@@ -1,9 +1,6 @@
 package dev.zoro.productservice.services;
 
-import dev.zoro.productservice.dtos.CategoryDto;
-import dev.zoro.productservice.dtos.CategoryResponseDto;
 import dev.zoro.productservice.dtos.GenericProductDto;
-import dev.zoro.productservice.dtos.ProductDto;
 import dev.zoro.productservice.exceptions.NotFoundException;
 import dev.zoro.productservice.models.Category;
 import dev.zoro.productservice.models.Price;
@@ -41,7 +38,9 @@ public class SelfProductServiceImpl implements ProductService {
     }
 
     @Override
-    public GenericProductDto getProductById(String id) throws NotFoundException {
+    public GenericProductDto getProductById(String id, UUID userID) throws NotFoundException {
+        //TODO: check if userID is authorized to access the product
+
         Optional<Product> productOptional = productRepository.findProductById(UUID.fromString(id));
         if (productOptional.isEmpty()) throw new NotFoundException("Product with id: " + id + " does not exist.");
         return convertToGenericProductDto(productOptional.get());
