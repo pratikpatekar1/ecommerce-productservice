@@ -15,9 +15,16 @@ public class SecurityConfig {
             throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/products/{id}").authenticated()
+                        //Testing hasAuthority
+                        .requestMatchers("/products/{id}").hasAuthority("ADMIN") //TODO: change this to use proper authorization
                         .anyRequest().permitAll()
-                );
+                )
+                .oauth2ResourceServer((resourceServer) -> resourceServer
+                        .jwt(
+                            jwtConfigurer -> {
+                                jwtConfigurer.jwtAuthenticationConverter(new CustomJwtAuthenticationConverter());
+                            }
+                            ));
                 // Form login handles the redirect to the login page from the
                 // authorization server filter chain
 //                .formLogin(Customizer.withDefaults());
