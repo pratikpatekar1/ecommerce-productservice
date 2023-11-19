@@ -34,7 +34,7 @@ public class FakeStoreProductService implements ProductService{
     }
 
 
-    public GenericProductDto getProductById(String id, UUID userID) throws NotFoundException {
+    public GenericProductDto getProductById(String id) throws NotFoundException {
         return convertFakeStoreProductToGenericProduct(fakeStoreProductServiceClient.getProductById(id));
     }
 

@@ -56,18 +56,14 @@ public class CategoryServiceImpl implements CategoryService {
 
         for(Category category:categories){
             List<Product> products = category.getProducts();
-            List<ProductDto> productDtos = new ArrayList<>();
+            List<UUID> productIds = new ArrayList<>();
             for(Product product:products){
-                ProductDto productDto = new ProductDto();
-                productDto.setImage(product.getImage());
-                productDto.setDescription(product.getDescription());
-                productDto.setTitle(product.getTitle());
-                productDto.setPrice(product.getPrice());
-                productDtos.add(productDto);
+                UUID uuid = product.getId();
+                productIds.add(uuid);
             }
             CategoryDto categoryDto = new CategoryDto();
             categoryDto.setName(category.getName());
-            categoryDto.setProducts(productDtos);
+            categoryDto.setProducts(productIds);
             categoryDto.setUuid(category.getId());
             categoryDtos.add(categoryDto);
         }

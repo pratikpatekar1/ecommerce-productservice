@@ -13,7 +13,7 @@ import java.util.UUID;
 
 
 public interface ProductService {
-    GenericProductDto getProductById(String id, UUID userID) throws NotFoundException;
+    GenericProductDto getProductById(String id) throws NotFoundException;
     GenericProductDto createProduct(GenericProductDto product);
     List<GenericProductDto> getAllProducts();
     GenericProductDto deleteProductById(String id) throws NotFoundException;

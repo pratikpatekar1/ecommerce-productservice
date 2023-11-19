@@ -29,18 +29,19 @@ public class ProductController {
         return new ResponseEntity<>(productDtos,HttpStatus.OK);
     }
     @GetMapping("{id}")
-    public ResponseEntity<GenericProductDto> getProductById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authToken , @PathVariable("id") String id) throws NotFoundException, UnauthorizedException {
-        Optional<JwtObject> authTokenObjOptional;
-        JwtObject authTokenObj;
-
-        if(authToken==null)throw new UnauthorizedException("Unauthorized to access the resource");
-
-        authTokenObjOptional = tokenValidator.validateToken(authToken);
-        if(authTokenObjOptional.isEmpty())throw new UnauthorizedException("Unauthorized to access the resource");
-
-        authTokenObj = authTokenObjOptional.get();
-
-        return new ResponseEntity<>(productService.getProductById(id,authTokenObj.getUserID()),HttpStatus.OK);
+    public ResponseEntity<GenericProductDto> getProductById(@PathVariable("id") String id) throws NotFoundException, UnauthorizedException {
+//        Optional<JwtObject> authTokenObjOptional;
+//        JwtObject authTokenObj;
+//
+//        if(authToken==null)throw new UnauthorizedException("Unauthorized to access the resource");
+//
+//        authTokenObjOptional = tokenValidator.validateToken(authToken);
+//        if(authTokenObjOptional.isEmpty())throw new UnauthorizedException("Unauthorized to access the resource");
+//
+//        authTokenObj = authTokenObjOptional.get();
+//
+//        return new ResponseEntity<>(productService.getProductById(id,authTokenObj.getId()),HttpStatus.OK);
+        return new ResponseEntity<>(productService.getProductById(id),HttpStatus.OK);
     }
     @DeleteMapping("{id}")
     public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") String id) throws NotFoundException {

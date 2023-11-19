@@ -38,7 +38,7 @@ public class SelfProductServiceImpl implements ProductService {
     }
 
     @Override
-    public GenericProductDto getProductById(String id, UUID userID) throws NotFoundException {
+    public GenericProductDto getProductById(String id) throws NotFoundException {
         //TODO: check if userID is authorized to access the product
 
         Optional<Product> productOptional = productRepository.findProductById(UUID.fromString(id));

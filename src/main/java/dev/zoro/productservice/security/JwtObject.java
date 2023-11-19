@@ -11,7 +11,7 @@ import java.util.UUID;
 @Setter
 @Getter
 public class JwtObject {
-    private UUID userID;
+    private UUID id;
     private String email;
     private List<Role> roles = new ArrayList<>();
     private String issuer;

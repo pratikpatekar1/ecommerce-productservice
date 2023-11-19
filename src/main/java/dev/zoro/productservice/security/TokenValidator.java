@@ -20,6 +20,7 @@ public class TokenValidator {
         Boolean tokenValid = restTemplate.postForObject(url, token, Boolean.class);
         if(!tokenValid)return Optional.empty();
         //TODO: use JwtObject
+
         JwtObject jwtObject = new JwtObject();
         return Optional.of(jwtObject);
     }

@@ -7,10 +7,10 @@ import java.util.Random;
 
 @SpringBootTest
 public class RandomFlakyTest {
-    @Test
-    void flakyTestLessThanThree(){
-        Random random = new Random();
-        int num = random.nextInt();
-        assert(num<3);
-    }
+//    @Test
+//    void flakyTestLessThanThree(){
+//        Random random = new Random();
+//        int num = random.nextInt();
+//        assert(num<3);
+//    }
 }
