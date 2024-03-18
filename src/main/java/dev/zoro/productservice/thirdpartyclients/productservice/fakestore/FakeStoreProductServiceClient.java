@@ -20,8 +20,8 @@ public class FakeStoreProductServiceClient {
     private RestTemplate restTemplate;
     private String specificProductRequestUrl;
     private String productRequestBaseUrl;
-    public FakeStoreProductServiceClient(RestTemplateBuilder restTemplateBuilder, @Value("${fakestore.api.url}") String fakeStoreUrl, @Value("${fakestore.api.productendpoint}") String fakeStoreProductEndpoint){
-        this.restTemplate = restTemplateBuilder.build();
+    public FakeStoreProductServiceClient(RestTemplate restTemplate, @Value("${fakestore.api.url}") String fakeStoreUrl, @Value("${fakestore.api.productendpoint}") String fakeStoreProductEndpoint){
+        this.restTemplate = restTemplate;
         this.productRequestBaseUrl = fakeStoreUrl+fakeStoreProductEndpoint;
         this.specificProductRequestUrl = fakeStoreUrl+fakeStoreProductEndpoint+"/{id}";
     }

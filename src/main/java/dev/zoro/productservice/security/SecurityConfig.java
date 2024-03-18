@@ -16,18 +16,20 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         //Testing hasAuthority
-                        .requestMatchers("/products/{id}").hasAuthority("ADMIN") //TODO: change this to use proper authorization
+//                        .requestMatchers("/products/{id}").hasAuthority("ADMIN") //TODO: change this to use proper authorization
                         .anyRequest().permitAll()
                 )
-                .oauth2ResourceServer((resourceServer) -> resourceServer
-                        .jwt(
-                            jwtConfigurer -> {
-                                jwtConfigurer.jwtAuthenticationConverter(new CustomJwtAuthenticationConverter());
-                            }
-                            ));
-                // Form login handles the redirect to the login page from the
-                // authorization server filter chain
-//                .formLogin(Customizer.withDefaults());
+//                .oauth2ResourceServer((resourceServer) -> resourceServer
+//                        .jwt(
+//                            jwtConfigurer -> {
+//                                jwtConfigurer.jwtAuthenticationConverter(new CustomJwtAuthenticationConverter());
+//                            }
+//                            ))
+                .cors().disable()
+                .csrf().disable();
+//                // Form login handles the redirect to the login page from the
+//                // authorization server filter chain
+////                .formLogin(Customizer.withDefaults());
         return http.build();
     }
 }
