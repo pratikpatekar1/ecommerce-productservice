@@ -3,7 +3,7 @@ package dev.zoro.productservice.controllers;
 import dev.zoro.productservice.dtos.GenericProductDto;
 import dev.zoro.productservice.dtos.SearchRequestDto;
 import dev.zoro.productservice.dtos.SortParameter;
-import dev.zoro.productservice.services.SearchService;
+//import dev.zoro.productservice.services.SearchService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,10 +18,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/search")
 public class SearchController {
-    private SearchService searchService;
-    public SearchController(SearchService searchService){
-        this.searchService = searchService;
-    }
+//    private SearchService searchService;
+//    public SearchController(SearchService searchService){
+//        this.searchService = searchService;
+//    }
     @PostMapping
     public Page<GenericProductDto> searchProducts(@RequestBody SearchRequestDto searchRequestDto){
         List<SortParameter> sortParameters = searchRequestDto.getSortByParameters();
@@ -41,6 +41,7 @@ public class SearchController {
 
         Pageable pageable = PageRequest.of(searchRequestDto.getPageNumber(), searchRequestDto.getPageSize(), sort);
 
-        return searchService.searchProducts(searchRequestDto.getQuery(), pageable);
+//        return searchService.searchProducts(searchRequestDto.getQuery(), pageable);
+        return null;
     }
 }

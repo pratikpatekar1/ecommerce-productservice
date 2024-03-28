@@ -7,7 +7,7 @@ import dev.zoro.productservice.models.Category;
 import dev.zoro.productservice.models.Price;
 import dev.zoro.productservice.models.Product;
 import dev.zoro.productservice.repositories.CategoryRepository;
-import dev.zoro.productservice.repositories.ProductSearchRepository;
+//import dev.zoro.productservice.repositories.ProductSearchRepository;
 import dev.zoro.productservice.repositories.ProductRepository;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Primary;
@@ -25,13 +25,15 @@ import java.util.UUID;
 public class SelfProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
-    private ProductSearchRepository productSearchRepository;
+//    private ProductSearchRepository productSearchRepository;
     private RestTemplate restTemplate;
 
-    public SelfProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, ProductSearchRepository productSearchRepository, RestTemplate restTemplate) {
+    public SelfProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository,
+//                                  ProductSearchRepository productSearchRepository,
+                                  RestTemplate restTemplate) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
-        this.productSearchRepository = productSearchRepository;
+//        this.productSearchRepository = productSearchRepository;
         this.restTemplate = restTemplate;
     }
 
@@ -69,7 +71,7 @@ public class SelfProductServiceImpl implements ProductService {
         Product savedProduct = productRepository.save(product1);
 
         product1.setId(savedProduct.getId());
-        productSearchRepository.save(product1);
+//        productSearchRepository.save(product1);
 
         return GenericProductDto.from(product1);
     }
@@ -88,14 +90,14 @@ public class SelfProductServiceImpl implements ProductService {
         Optional<Product> productOptional = productRepository.findProductById(UUID.fromString(id));
         if(productOptional.isEmpty()) throw new NotFoundException("Product with id: "+id+" does not exist.");
         productRepository.deleteById(UUID.fromString(id));
-        productSearchRepository.deleteById(UUID.fromString(id));
+//        productSearchRepository.deleteById(UUID.fromString(id));
         return GenericProductDto.from(productOptional.get());
     }
 
     @Override
     public GenericProductDto updateProductById(String id, GenericProductDto product) throws NotFoundException {
         Optional<Product> productOptional = productRepository.findProductById(UUID.fromString(id));
-        Product elasticProduct = productSearchRepository.findById(UUID.fromString(id)).get();
+//        Product elasticProduct = productSearchRepository.findById(UUID.fromString(id)).get();
 
         if(productOptional.isEmpty())throw new NotFoundException("Product with id: "+id+" does not exist.");
 
@@ -105,9 +107,9 @@ public class SelfProductServiceImpl implements ProductService {
         product1.setDescription(product.getDescription());
         product1.setImage(product.getImage());
 
-        elasticProduct.setTitle(product.getTitle());
-        elasticProduct.setDescription(product.getDescription());
-        elasticProduct.setImage(product.getImage());
+//        elasticProduct.setTitle(product.getTitle());
+//        elasticProduct.setDescription(product.getDescription());
+//        elasticProduct.setImage(product.getImage());
 
         Category category = categoryRepository.getCateogryByName(product.getCategory());
         if(category==null){
@@ -120,12 +122,12 @@ public class SelfProductServiceImpl implements ProductService {
         product1.setCategory(category);
         product1.setPrice(price);
 
-        elasticProduct.setCategory(category);
-        elasticProduct.setPrice(price);
+//        elasticProduct.setCategory(category);
+//        elasticProduct.setPrice(price);
 
         Product savedProduct = productRepository.save(product1);
 
-        productSearchRepository.save(elasticProduct);
+//        productSearchRepository.save(elasticProduct);
         return GenericProductDto.from(savedProduct);
     }
 

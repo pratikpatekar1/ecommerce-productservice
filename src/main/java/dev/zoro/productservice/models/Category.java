@@ -9,14 +9,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.data.elasticsearch.annotations.Document;
+//import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@Document(indexName = "productservice")
+//@Document(indexName = "productservice")
 public class Category extends BaseModel{
     private String name;
     @OneToMany(mappedBy = "category")
