@@ -40,7 +40,7 @@ public class SelfProductServiceImpl implements ProductService {
     @Override
     public GenericProductDto getProductById(String id) throws NotFoundException {
         //TODO: check if userID is authorized to access the product
-        ResponseEntity<UserDto> userDto =  restTemplate.getForEntity("http://userservice/users/0x205F18507C0C42B1BDC544A58E6479B0", UserDto.class);
+//        ResponseEntity<UserDto> userDto =  restTemplate.getForEntity("http://userservice/users/0x205F18507C0C42B1BDC544A58E6479B0", UserDto.class);
 
         Optional<Product> productOptional = productRepository.findProductById(UUID.fromString(id));
         if (productOptional.isEmpty()) throw new NotFoundException("Product with id: " + id + " does not exist.");
